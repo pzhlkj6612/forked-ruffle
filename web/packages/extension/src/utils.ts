@@ -73,10 +73,25 @@ if (typeof browser !== "undefined") {
 }
 export const openOptionsPage: () => Promise<void> = () =>
     runtime.openOptionsPage();
-export const openPlayerPage: () => Promise<void> = () =>
-    promisify((cb: () => void) => tabs.create({ url: "/player.html" }, cb));
-export const openOnboardPage: () => Promise<void> = () =>
-    promisify((cb: () => void) => tabs.create({ url: "/onboard.html" }, cb));
+async function getAdjacentTabIndex(): Promise<number | undefined> {
+    const [activeTab] = await tabs.query({
+        active: true,
+        currentWindow: true,
+    });
+    return activeTab?.index !== undefined ? activeTab.index + 1 : undefined;
+}
+export const openPlayerPage: () => Promise<void> = async () => {
+    const index = await getAdjacentTabIndex();
+    await promisify((cb: () => void) =>
+        tabs.create({ url: "/player.html", index }, cb),
+    );
+};
+export const openOnboardPage: () => Promise<void> = async () => {
+    const index = await getAdjacentTabIndex();
+    await promisify((cb: () => void) =>
+        tabs.create({ url: "/onboard.html", index }, cb),
+    );
+};
 
 export async function getOptions(): Promise<Options> {
     const options = await storage.sync.get();
