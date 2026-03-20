@@ -82,18 +82,18 @@ async function getAdjacentTabIndex(): Promise<number | undefined> {
     return activeTab?.index !== undefined ? activeTab.index + 1 : undefined;
 }
 
-export const openPlayerPage: () => Promise<void> = async () => {
-    const index = await getAdjacentTabIndex();
-    await promisify<void>((cb: () => void) =>
-        tabs.create({ url: "/player.html", index }, cb),
+export const openPlayerPage: () => Promise<void> = () =>
+    getAdjacentTabIndex().then((index) =>
+        promisify((cb: () => void) =>
+            tabs.create({ url: "/player.html", index }, cb),
+        ),
     );
-};
-export const openOnboardPage: () => Promise<void> = async () => {
-    const index = await getAdjacentTabIndex();
-    await promisify<void>((cb: () => void) =>
-        tabs.create({ url: "/onboard.html", index }, cb),
+export const openOnboardPage: () => Promise<void> = () =>
+    getAdjacentTabIndex().then((index) =>
+        promisify((cb: () => void) =>
+            tabs.create({ url: "/onboard.html", index }, cb),
+        ),
     );
-};
 
 export async function getOptions(): Promise<Options> {
     const options = await storage.sync.get();
