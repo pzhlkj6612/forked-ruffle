@@ -84,13 +84,13 @@ async function getAdjacentTabIndex(): Promise<number | undefined> {
 
 export const openPlayerPage: () => Promise<void> = async () => {
     const index = await getAdjacentTabIndex();
-    await promisify((cb: () => void) =>
+    await promisify<void>((cb: () => void) =>
         tabs.create({ url: "/player.html", index }, cb),
     );
 };
 export const openOnboardPage: () => Promise<void> = async () => {
     const index = await getAdjacentTabIndex();
-    await promisify((cb: () => void) =>
+    await promisify<void>((cb: () => void) =>
         tabs.create({ url: "/onboard.html", index }, cb),
     );
 };
