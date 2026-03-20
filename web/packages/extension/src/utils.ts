@@ -73,6 +73,7 @@ if (typeof browser !== "undefined") {
 }
 export const openOptionsPage: () => Promise<void> = () =>
     runtime.openOptionsPage();
+
 async function getAdjacentTabIndex(): Promise<number | undefined> {
     const [activeTab] = await tabs.query({
         active: true,
@@ -80,6 +81,7 @@ async function getAdjacentTabIndex(): Promise<number | undefined> {
     });
     return activeTab?.index !== undefined ? activeTab.index + 1 : undefined;
 }
+
 export const openPlayerPage: () => Promise<void> = async () => {
     const index = await getAdjacentTabIndex();
     await promisify((cb: () => void) =>
