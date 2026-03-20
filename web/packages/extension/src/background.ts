@@ -253,10 +253,9 @@ function onMessage(
 ): void {
     if (isMessage(request)) {
         if (request.type === "open_url_in_player") {
-            const index =
-                sender.tab?.index !== undefined
-                    ? sender.tab.index + 1
-                    : undefined;
+            const index = sender.tab?.index !== undefined
+                ? sender.tab.index + 1
+                : undefined;
             chrome.tabs.create({
                 url: utils.runtime.getURL(`player.html#${request.url}`),
                 index,
