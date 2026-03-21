@@ -67,11 +67,11 @@ async function getAdjacentTabIndex(): Promise<number | undefined> {
     return activeTab?.index !== undefined ? activeTab.index + 1 : undefined;
 }
 
-export const openPlayerPage: () => Promise<void> = async () => {
+export async function openPlayerPage(): Promise<void> {
     const index = await getAdjacentTabIndex();
     await tabs.create({ url: "/player.html", index });
 };
-export const openOnboardPage: () => Promise<void> = async () => {
+export async function openOnboardPage(): Promise<void> {
     const index = await getAdjacentTabIndex();
     await tabs.create({ url: "/onboard.html", index });
 };
