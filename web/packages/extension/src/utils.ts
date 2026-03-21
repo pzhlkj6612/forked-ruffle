@@ -66,7 +66,6 @@ async function getAdjacentTabIndex(): Promise<number | undefined> {
     });
     return activeTab?.index !== undefined ? activeTab.index + 1 : undefined;
 }
-
 export async function openPlayerPage(): Promise<void> {
     const index = await getAdjacentTabIndex();
     await tabs.create({ url: "/player.html", index });
